@@ -1,17 +1,22 @@
 // With Express
 
 const express = require("express");
-const app = express();
+const mongoose = require("mongoose");
 const morgan = require("morgan");
+const app = express();
+const dbURL =
+  "mongodb+srv://tamta:tamta123@cluster0.7tgwt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+mongoose
+  .connect(dbURL)
+  .then((result) => app.listen(3000))
+  .catch((err) => console.log(err));
+
 // register view engines
 // here we say that ejs is going too be used to create our templates
 app.set("view engine", "ejs");
-
-app.use(express.static('public'))
-app.use(morgan('dev'))
-//listen for requests
-app.listen(3000);
-
+app.use(express.static("public"));
+app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
   // res.sendFile("./views/index.html", { root: __dirname });  ianother way we can write like this using ejs view engines
