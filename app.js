@@ -3,6 +3,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
+const Blog = require("./models/blog");
 const app = express();
 const dbURL =
   "mongodb+srv://tamta:tamta123@cluster0.7tgwt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
@@ -17,6 +18,26 @@ mongoose
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(morgan("dev"));
+
+//mongoose and mongo sendbox routes
+app.get("/add-blog", (req, res) => {
+  const blog = new Blog({
+    title: "new blog 4",
+    snippet: "about this new blog",
+    body: "more abotu thsi blog",
+  });
+
+  blog
+    .save()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+
 
 app.get("/", (req, res) => {
   // res.sendFile("./views/index.html", { root: __dirname });  ianother way we can write like this using ejs view engines
