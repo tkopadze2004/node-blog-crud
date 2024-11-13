@@ -6,8 +6,7 @@ const blog_index = (req, res) => {
     //using createdAt we have newest item on top
     .then((result) => {
       res.render("blogs/index", { title: "all blogs", blogs: result });
-    })
-    .catch((err) => {
+    })   .catch((err) => {
       console.log(err);
     });
 }; 
@@ -22,9 +21,13 @@ const blog_details = (req, res) => {
       res.status(404).render("404", { title: "Blog not found" });
     });
 }; 
+
+
 const blog_create_get = (req, res) => {
   res.render("blogs/create", { title: "Create a new blog" });
 };
+
+
 const blog_create_post = (req, res) => {
   console.log(req.body);
   const blog = new Blog(req.body);
@@ -36,6 +39,8 @@ const blog_create_post = (req, res) => {
     })
     .then((err) => console.log(err));
 };
+
+
 const blog_delete = (req, res) => {
   const id = req.params.id.trim();
 

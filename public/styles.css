@@ -68,7 +68,7 @@ h3 {
   border-left: 6px solid rgb(17, 161, 161);
 }
 .blogs a:hover h3 {
-  color: rgb(14, 133, 133)
+  color: rgb(14, 133, 133);
 }
 
 /* details styles */
@@ -80,7 +80,7 @@ h3 {
   top: 0;
   right: 0;
   border-radius: 50%;
-  padding: 10px  10px 6px;
+  padding: 10px 10px 6px;
 }
 .delete:hover {
   cursor: pointer;

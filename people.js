@@ -1,5 +1,4 @@
 const people=['tamta', 'ana', 'as']
-const peoplea=['tamta', 'ana', 'as']
+const peoplea=['tamta1', 'ana1', 'as1']
 
-// console.log(people);
 module.exports = {people,peoplea}

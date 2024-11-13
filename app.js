@@ -3,8 +3,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const blogRoutes = require("./routes/blogRoutes");
-const { render } = require("ejs");
 const app = express();
+
 const dbURL =
   "mongodb+srv://tamta:tamta123@cluster0.7tgwt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
@@ -24,13 +24,7 @@ app.use((req, res, next) => {
 });
 app.use(morgan("dev"));
 app.use("/blogs", blogRoutes);
-//mongoose and mongo sendbox routes
 
-//send,create blog
-
-//get all blogs
-
-//get blog by id
 
 //use redirect
 app.get("/", (req, res) => {
@@ -41,7 +35,6 @@ app.get("/about", (req, res) => {
   res.render("blogs/about", { title: "About" });
 });
 
-// redirects
 
 //404 page
 app.use((req, res) => {
