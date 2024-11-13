@@ -17,7 +17,40 @@ mongoose
 // here we say that ejs is going too be used to create our templates
 app.set("view engine", "ejs");
 app.use(express.static("public"));
+app.use(express.urlencoded())
 app.use(morgan("dev"));
+
+
+
+
+
+
+
+
+
+
+
+app.post("/blogs", (req, res) => {
+  console.log(req.body);
+  const blog = new Blog(req.body);
+
+  blog
+    .save()
+    .then((result) => {
+      res.redirect("/blogs");
+    })
+    .then((err) => console.log(err));
+});
+
+
+
+
+
+
+
+
+
+
 
 
 //mongoose and mongo sendbox routes
