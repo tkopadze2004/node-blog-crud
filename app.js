@@ -32,6 +32,11 @@ app.post("/blogs", (req, res) => {
     .then((err) => console.log(err));
 });
 
+app.get("/blogs/create", (req, res) => {
+  res.render("create", { title: "Create a new blog" });
+});
+
+
 app.get("/blogs/:id", (req, res) => {
   const id = req.params.id.trim();
   Blog.findById(id)
@@ -47,8 +52,8 @@ app.delete("/blogs/:id", (req, res) => {
   const id = req.params.id.trim();
 
   Blog.findByIdAndDelete(id)
-    .then(result => {
-      res.json({ redirect: '/blogs' });
+    .then((result) => {
+      res.json({ redirect: "/blogs" });
     })
     .catch((err) => {
       console.log(err);
