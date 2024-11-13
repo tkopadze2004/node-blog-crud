@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const Blog = require("./models/blog");
+const { render } = require("ejs");
 const app = express();
 const dbURL =
   "mongodb+srv://tamta:tamta123@cluster0.7tgwt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
@@ -12,23 +13,12 @@ mongoose
   .then((result) => app.listen(3000))
   .catch((err) => console.log(err));
 
-
 // register view engines
 // here we say that ejs is going too be used to create our templates
 app.set("view engine", "ejs");
 app.use(express.static("public"));
-app.use(express.urlencoded())
+app.use(express.urlencoded());
 app.use(morgan("dev"));
-
-
-
-
-
-
-
-
-
-
 
 app.post("/blogs", (req, res) => {
   console.log(req.body);
@@ -42,17 +32,28 @@ app.post("/blogs", (req, res) => {
     .then((err) => console.log(err));
 });
 
+app.get("/blogs/:id", (req, res) => {
+  const id = req.params.id.trim();
+  Blog.findById(id)
+    .then((result) => {
+      res.render("details", { blog: result, title: "blog details" });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
+app.delete("/blogs/:id", (req, res) => {
+  const id = req.params.id.trim();
 
-
-
-
-
-
-
-
-
-
+  Blog.findByIdAndDelete(id)
+    .then(result => {
+      res.json({ redirect: '/blogs' });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 //mongoose and mongo sendbox routes
 
 //send,create blog
@@ -73,8 +74,6 @@ app.get("/add-blog", (req, res) => {
     });
 });
 
-
-
 //get all blogs
 app.get("/all-blogs", (req, res) => {
   Blog.find()
@@ -86,7 +85,6 @@ app.get("/all-blogs", (req, res) => {
     });
 });
 
-
 //get blog by id
 app.get("/get-by-id", (req, res) => {
   Blog.findById("673379b4bb1cc574a4c864a2")
@@ -97,7 +95,6 @@ app.get("/get-by-id", (req, res) => {
       console.log(err);
     });
 });
-
 
 // app.get("/", (req, res) => {
 //   // res.sendFile("./views/index.html", { root: __dirname });  ianother way we can write like this using ejs view engines
@@ -127,28 +124,21 @@ app.get("/blogs", (req, res) => {
     });
 });
 
-
 app.get("/about", (req, res) => {
   res.render("about", { title: "About" });
 
   // res.sendFile("./views/about.html", { root: __dirname });
 });
 
-
-
 app.get("/blogs/create", (req, res) => {
   res.render("create", { title: "Create blog" });
   // res.sendFile("./views/about.html", { root: __dirname });
 });
 
-
-
 // redirects
 app.get("/about-me", (req, res) => {
   res.redirect("/about");
 });
-
-
 
 //404 page
 app.use((req, res) => {
