@@ -17,50 +17,16 @@ mongoose
 // here we say that ejs is going too be used to create our templates
 app.set("view engine", "ejs");
 app.use(express.static("public"));
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 app.use("/blogs", blogRoutes);
 //mongoose and mongo sendbox routes
 
 //send,create blog
-app.get("/add-blog", (req, res) => {
-  const blog = new Blog({
-    title: "new blog 6",
-    snippet: "about this new blog",
-    body: "more abotu thsi blog",
-  });
-
-  blog
-    .save()
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
 
 //get all blogs
-app.get("/all-blogs", (req, res) => {
-  Blog.find()
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
 
 //get blog by id
-app.get("/get-by-id", (req, res) => {
-  Blog.findById("673379b4bb1cc574a4c864a2")
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
 
 //use redirect
 app.get("/", (req, res) => {
@@ -68,20 +34,10 @@ app.get("/", (req, res) => {
 });
 
 app.get("/about", (req, res) => {
-  res.render("about", { title: "About" });
-
-  // res.sendFile("./views/about.html", { root: __dirname });
-});
-
-app.get("/blogs/create", (req, res) => {
-  res.render("create", { title: "Create blog" });
-  // res.sendFile("./views/about.html", { root: __dirname });
+  res.render("blogs/about", { title: "About" });
 });
 
 // redirects
-app.get("/about-me", (req, res) => {
-  res.redirect("/about");
-});
 
 //404 page
 app.use((req, res) => {
